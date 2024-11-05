@@ -1,0 +1,18 @@
+* SootTutorial
+Minimal Setup to build an analysis using soot
+
+** Download Soot jars and source from,
+   https://repo1.maven.org/maven2/org/soot-oss/soot/4.3.0/.
+
+** Export the CLASSPATH
+   export CLASSPATH=".:<absolute path to soot-4.3.0-with-deps.jar>"
+
+** Export jdk location as PATH
+   export PATH=<absolute path to jdk-11.0.21+9/bin>:$PATH
+
+** Compile all the java files
+   javac *.java
+
+
+** Run the Analysis file
+   java Analysis
