@@ -9,6 +9,7 @@ Minimal Setup to build an analysis using soot
     + Note also using the full jar name at the end,
       <path>/soot-4.3.0-with-deps.jar
     + You can also create a softlink using *ln -S <path_to_soot_jar>
+      .* and then do *export CLASSPATH=".:./soot-4.3.0-with-deps.jar"*
 
 ** Export jdk location as PATH
    export PATH=<absolute path to jdk-11.0.21+9/bin>:$PATH
