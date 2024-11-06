@@ -20,3 +20,14 @@ Minimal Setup to build an analysis using soot
 
 ** Run the Analysis file
    java Analysis
+
+
+** If you wish to just use soot from commandline
+   + export the classpath as suggested earlier and then run
+     *java soot.Main -pp -cp . -f jimple Test*.
+
+   + The command tries to generate jimple files for the Test.class
+     file in sootOutput directory.
+
+   + cat ./sootOutput/Test.jimple to view file
+   
