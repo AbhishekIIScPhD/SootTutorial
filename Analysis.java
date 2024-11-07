@@ -4,6 +4,7 @@ import soot.jimple.spark.pag.AllocNode;
 import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.jimple.toolkits.callgraph.Edge;
 import soot.options.Options;
+import soot.toolkits.graph.BriefUnitGraph;
 import soot.toolkits.graph.ExceptionalUnitGraph;
 import soot.toolkits.graph.UnitGraph;
 import soot.toolkits.scalar.Pair;
@@ -47,39 +48,10 @@ public class Analysis {
         System.out.println(AnalysisClass);
         SootMethod analysisMethod = AnalysisClass.getMethodByName("arrayCheck");
         System.out.println(analysisMethod);
-        UnitGraph pug = new ExceptionalUnitGraph(analysisMethod.getActiveBody());
+        UnitGraph pug = new BriefUnitGraph(analysisMethod.getActiveBody());
         PointsToAnalysis p2Analysis = Scene.v().getPointsToAnalysis();
-        System.out.println(pug);
-        for(Unit u : pug.getBody().getUnits()){
-            Stmt s = (Stmt)u;
-            if(s instanceof AssignStmt && s.containsArrayRef()){
-                System.out.println("An array reference");
-                AssignStmt ass = (AssignStmt)s;
-                if(ass.getLeftOp() instanceof ArrayRef){
-                    ArrayRef aref = (ArrayRef) ass.getLeftOp();
-                    System.out.println("Array Access:" + aref.toString());
-                    if(aref instanceof ArrayRef){
-                        System.out.println(aref.getBase());
-                        PointsToSet p2s = p2Analysis.reachingObjects((Local) aref.getBase());
-                        System.out.println("p2s : "+ p2s.toString());
-                        PointsToSetInternal p2sInt =  (PointsToSetInternal)p2s;
-                        System.out.println("p2sInt : " + p2sInt.toString());
-                        p2sInt.forall(new P2SetVisitor() {
-                            @Override
-                            public void visit(Node node) {
-                                System.out.println(node.toString());
-                                AllocNode anode = (AllocNode)node;
-                                NewArrayExpr arrayAlloc = (NewArrayExpr) anode.getNewExpr();
-                                System.out.println("Array Size : " + arrayAlloc.getSize());
-                                System.out.println("Array Type : " + arrayAlloc.getType());
-                            }
-                        });
-                        System.out.println(p2s.toString());
-
-                    }
-                }
-            }
-        }
-//        IVA iva = new IVA(pug);
+        //System.out.println(pug);
+        IVA iva = new IVA(pug, analysisMethod);
+        iva.getFlowAfter(pug.getHeads().get(0));
     }
 }
