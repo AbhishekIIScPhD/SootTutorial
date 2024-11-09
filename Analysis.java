@@ -52,6 +52,7 @@ public class Analysis {
         PointsToAnalysis p2Analysis = Scene.v().getPointsToAnalysis();
         //System.out.println(pug);
         IVA iva = new IVA(pug, analysisMethod);
-        iva.getFlowAfter(pug.getHeads().get(0));
+        iva.getFallFlowAfter(pug.getHeads().get(0));
+        APA apa = new APA(pug, analysisMethod);
     }
 }
